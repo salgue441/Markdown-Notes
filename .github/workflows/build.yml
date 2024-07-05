@@ -29,7 +29,9 @@ jobs:
         working-directory: ./markdown-notes
 
       - name: Build App
-        run: cd ./markdown-notes && bun build
+        run: bun build
+        working-directory: ./markdown-notes
+        if: success() || failure()
 
       - name: Archive Artifacts
         uses: actions/upload-artifact@v4

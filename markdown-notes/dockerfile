@@ -1,7 +1,5 @@
 # Stage 1: Build Stage
 FROM ubuntu:20.04 AS build
-
-# Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install necessary packages for building
@@ -28,7 +26,7 @@ RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
 
 # Install Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
   apt-get install -y nodejs
 
 # Create app directory
