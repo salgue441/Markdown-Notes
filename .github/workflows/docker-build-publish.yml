@@ -24,12 +24,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Move to directory
-        run: cd markdown-notes && ls
-
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
+          context: ./markdown-notes
           push: true
           tags: user/app:latest
 
