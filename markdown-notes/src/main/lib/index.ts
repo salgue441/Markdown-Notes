@@ -7,6 +7,7 @@ import { isEmpty } from 'lodash'
 import { homedir } from 'os'
 import path from 'path'
 import welcomeNoteFile from '../../../resources/welcome.md?asset'
+import { randomUUID } from 'crypto'
 
 /**
  * Returns the root directory where the notes are stored.
@@ -57,6 +58,7 @@ export const getNoteInfoFromFilename = async (filename: string): Promise<NoteInf
   const filePath = await stat(`${getRootDir()}/${filename}`)
 
   return {
+    id: randomUUID(),
     title: filename.replace(/\.md$/, ''),
     lastEditTime: filePath.mtimeMs
   }
