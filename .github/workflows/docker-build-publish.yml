@@ -29,3 +29,8 @@ jobs:
         with:
           push: true
           tags: user/app:latest
+
+      - name: Clean up
+        run: |
+          docker system prune -af
+          docker logout
