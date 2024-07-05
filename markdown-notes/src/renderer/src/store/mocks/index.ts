@@ -1,19 +1,19 @@
 import { NoteInfo } from '@shared/models'
-import { randomUUID } from 'crypto'
+import { v4 as uuidv4 } from 'uuid'
 
 export const notesMock: NoteInfo[] = [
   {
-    id: randomUUID(),
+    id: uuidv4(),
     title: 'Welcome 👋🏻',
     lastEditTime: new Date().getTime()
   },
   {
-    id: randomUUID(),
+    id: uuidv4(),
     title: 'Getting Started',
     lastEditTime: new Date().getTime()
   },
   {
-    id: randomUUID(),
+    id: uuidv4(),
     title: 'Customization Options',
     lastEditTime: new Date().getTime()
   }

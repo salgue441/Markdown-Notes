@@ -15,12 +15,18 @@ function createWindow(): void {
     frame: false,
     transparent: true,
     backgroundColor: '#00000000',
-    vibrancy: 'under-window',
-    visualEffectState: 'active',
+
+    // macOS specific settings for acrylic effect
+    vibrancy: 'under-window', // macOS only, provides the acrylic effect
+    visualEffectState: 'active', // macOS only, indicates the window is active
     trafficLightPosition: { x: 15, y: 10 },
+
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
+      defaultEncoding: 'UTF-8',
+      contextIsolation: true,
+      nodeIntegration: false
     }
   })
 

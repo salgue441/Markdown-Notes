@@ -1,4 +1,11 @@
-import { ActionButtonRow, Content, RootLayout, Sidebar, DraggableTopBar } from './components'
+import {
+  ActionButtonRow,
+  Content,
+  RootLayout,
+  Sidebar,
+  DraggableTopBar,
+  NotePreviewList
+} from './components'
 import {} from './components/generic/ActionButtonRow'
 
 const App = () => {
@@ -9,6 +16,7 @@ const App = () => {
       <RootLayout>
         <Sidebar className="p-2">
           <ActionButtonRow className="flex justify-between mt-1" />
+          <NotePreviewList className="mt-3 space-y-1" />
         </Sidebar>
 
         <Content className="border-l bg-zinc-900/50 border-l-white/20">Content</Content>
