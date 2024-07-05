@@ -1,0 +1,14 @@
+# Ignore node_modules and bun_modules
+node_modules
+bun_modules
+
+# Ignore logs
+*.log
+
+# Ignore build outputs
+build
+dist
+
+# Ignore Dockerfile and .dockerignore itself
+Dockerfile
+.dockerignore
