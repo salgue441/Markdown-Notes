@@ -25,7 +25,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Move to directory
-        run: cd app
+        run: cd markdown-notes
 
       - name: Build and push
         uses: docker/build-push-action@v6
