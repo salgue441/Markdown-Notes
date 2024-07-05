@@ -1,0 +1,50 @@
+name: Build and Release Brezel App
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set Up Node JS version 18
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 18
+
+      - name: Install Bun as Package Manager
+        run: npm install -g bun
+
+      - name: Install Dependencies
+        run: bun install
+        working-directory: ./markdown-notes
+
+      - name: Build App
+        run: bun build
+        working-directory: ./markdown-notes
+
+      - name: Archive Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: markdown-notes
+          path: markdown-notes/dist
+
+      - name: Publish Release
+        id: publish-release
+        uses: softprops/action-gh-release@v2.0.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: markdown-notes/dist/*
+          tag_name: ${{ github.run_number }}
+          draft: false
+          prerelease: false
