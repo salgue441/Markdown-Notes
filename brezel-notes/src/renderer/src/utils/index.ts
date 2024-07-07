@@ -8,13 +8,15 @@ import { twMerge } from 'tailwind-merge'
  * @property {string} dateStyle - Date style ('short', 'medium', 'long', 'full')
  * @property {string} timeStyle - Time style ('short', 'medium', 'long', 'full')
  * @property {string} timeZone - Time zone ('UTC', 'GMT', 'Asia/Tokyo', etc.)
+ * @property {boolean} hour12 - 12-hour time format (true, false)
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
  */
 export const dateFormatter = new Intl.DateTimeFormat(window.context.locale, {
   dateStyle: 'medium',
   timeStyle: 'short',
-  timeZone: 'UTC'
+  timeZone: 'UTC',
+  hour12: false
 })
 
 /**

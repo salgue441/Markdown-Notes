@@ -1,6 +1,8 @@
 import {
   Content,
   DraggableTopbar,
+  FloatingNoteTitle,
+  MarkdownEditor,
   NoteActionsRow,
   NotePreviewList,
   RootLayout,
@@ -18,7 +20,10 @@ function App(): JSX.Element {
           <NotePreviewList className="mt-3 space-y-1" />
         </Sidebar>
 
-        <Content className="bg-gray-100"></Content>
+        <Content className="border-l bg-zinc-900/50 border-l-white/20">
+          <FloatingNoteTitle className="pt-2" />
+          <MarkdownEditor />
+        </Content>
       </RootLayout>
     </>
   )

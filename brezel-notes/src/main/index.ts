@@ -1,6 +1,6 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { electronApp, is, optimizer } from '@electron-toolkit/utils'
+import { BrowserWindow, app, ipcMain, shell } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
@@ -12,8 +12,8 @@ function createWindow(): void {
     title: 'Brezel Notes',
     frame: false,
     transparent: true,
-    // backgroundColor: '#00000000',
     backgroundMaterial: 'acrylic',
+    opacity: 0.98,
 
     ...(process.platform === 'linux' ? { icon } : {}),
 
