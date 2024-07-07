@@ -18,7 +18,7 @@ const selectedNoteAtom = atom((get) => {
   const notes = get(notesAtom)
   const selectedNoteIndex = get(selectedNoteIndexAtom)
 
-  if (!selectedNoteIndex) {
+  if (selectedNoteIndex == null) {
     return null
   }
 
