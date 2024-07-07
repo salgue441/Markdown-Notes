@@ -1,4 +1,4 @@
-import { NoteInfo } from '@shared/models'
+import { NoteContent, NoteInfo } from '@shared/models'
 import { atom } from 'jotai'
 import { unwrap } from 'jotai/utils'
 import { v4 as uuidv4 } from 'uuid'
@@ -54,6 +54,30 @@ const selectedNoteAtom = unwrap(
     }
 )
 
+const saveNoteAtom = atom(null, async (get, set, newContent: NoteContent) => {
+  const notes = get(notesAtom)
+  const selectedNote = get(selectedNoteAtom)
+
+  if (!selectedNote || !notes) {
+    return
+  }
+
+  await window.context.writeNote(selectedNote.title, newContent)
+  set(
+    notesAtom,
+    notes.map((note) => {
+      if (note.id === selectedNote.id || note.title === selectedNote.title) {
+        return {
+          ...note,
+          lastEditedTime: Date.now()
+        }
+      }
+
+      return note
+    })
+  )
+})
+
 /**
  * This atom is used to create an empty note with a unique ID.
  *
@@ -105,4 +129,11 @@ const deleteNoteAtom = atom(null, async (get, set) => {
   set(selectedNoteIndexAtom, null)
 })
 
-export { notesAtom, selectedNoteIndexAtom, selectedNoteAtom, createEmptyNoteAtom, deleteNoteAtom }
+export {
+  notesAtom,
+  selectedNoteIndexAtom,
+  selectedNoteAtom,
+  saveNoteAtom,
+  createEmptyNoteAtom,
+  deleteNoteAtom
+}
