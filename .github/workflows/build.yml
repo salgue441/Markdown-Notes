@@ -26,17 +26,17 @@ jobs:
 
       - name: Install Dependencies
         run: bun install
-        working-directory: ./markdown-notes
+        working-directory: ./brezel-notes
 
       - name: Build App
         run: bun build
-        working-directory: ./markdown-notes
+        working-directory: ./brezel-notes
 
       - name: Archive Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: markdown-notes
-          path: markdown-notes/dist
+          name: brezel-notes
+          path: brezel-notes/dist
 
       - name: Publish Release
         id: publish-release
@@ -44,7 +44,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: markdown-notes/dist/*
+          files: brezel-notes/dist/*
           tag_name: ${{ github.run_number }}
           draft: false
           prerelease: false
