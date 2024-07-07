@@ -1,5 +1,7 @@
 # 📝 Brezel-Notes App
 
+![Banner](./assets/brezel-notes.png)
+
 A sleek, modern notes app built with TypeScript, TailwindCSS, and ElectronJS. Supports Markdown and integrates seamlessly with the filesystem for creating, reading, updating, and deleting notes. Containerized with Docker for easy deployment.
 
 ## ✨ Features
