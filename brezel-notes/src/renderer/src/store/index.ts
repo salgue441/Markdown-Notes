@@ -1,9 +1,21 @@
-import { notesMock } from './mocks'
 import { NoteInfo } from '@shared/models'
 import { atom } from 'jotai'
+import { unwrap } from 'jotai/utils'
 import { v4 as uuidv4 } from 'uuid'
 
-const notesAtom = atom<NoteInfo[]>(notesMock)
+/**
+ * Loads the notes from the window context and sorts them based on
+ * last edited time.
+ *
+ * @returns {Promise<Note[]>} The sorted array of notes.
+ */
+const loadNotes = async () => {
+  const notes = await window.context.getNotes()
+  return notes.sort((a, b) => b.lastEditedTime - a.lastEditedTime)
+}
+
+const notesAtomAsync = atom<NoteInfo[] | Promise<NoteInfo[]>>(loadNotes())
+const notesAtom = unwrap(notesAtomAsync, (prev) => prev)
 const selectedNoteIndexAtom = atom<number | null>(null)
 
 /**
@@ -19,7 +31,7 @@ const selectedNoteAtom = atom((get) => {
   const notes = get(notesAtom)
   const selectedNoteIndex = get(selectedNoteIndexAtom)
 
-  if (selectedNoteIndex == null) {
+  if (selectedNoteIndex == null || !notes) {
     return null
   }
 
@@ -42,6 +54,10 @@ const selectedNoteAtom = atom((get) => {
  */
 const createEmptyNoteAtom = atom(null, (get, set) => {
   const notes = get(notesAtom)
+  if (!notes) {
+    return
+  }
+
   const title = `Note ${notes.length + 1}`
 
   const newNote: NoteInfo = {
@@ -63,7 +79,7 @@ const createEmptyNoteAtom = atom(null, (get, set) => {
  * @param {NoteInfo[]} get - The get function from Jotai
  * @param {NoteInfo[]} set - The set function from Jotai
  */
-const deleteNoteAtom = atom(null, (get, set) => {
+const deleteNoteAtom = atom(null, async (get, set) => {
   const notes = get(notesAtom)
   const selectedNote = get(selectedNoteAtom)
 
