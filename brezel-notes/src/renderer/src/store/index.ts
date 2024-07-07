@@ -88,17 +88,20 @@ const saveNoteAtom = atom(null, async (get, set, newContent: NoteContent) => {
  * @param {NoteInfo[]} set - The set function from Jotai
  * @returns {NoteInfo} - The new note
  */
-const createEmptyNoteAtom = atom(null, (get, set) => {
+const createEmptyNoteAtom = atom(null, async (get, set) => {
   const notes = get(notesAtom)
   if (!notes) {
     return
   }
 
-  const title = `Note ${notes.length + 1}`
+  const title = await window.context.createNote()
+  if (!title) {
+    return
+  }
 
   const newNote: NoteInfo = {
     id: uuidv4(),
-    title,
+    title: title,
     lastEditedTime: Date.now()
   }
 
@@ -120,6 +123,11 @@ const deleteNoteAtom = atom(null, async (get, set) => {
   const selectedNote = get(selectedNoteAtom)
 
   if (!selectedNote || !notes) return
+
+  const isDeleted = await window.context.deleteNote(selectedNote.title)
+  if (!isDeleted) {
+    return
+  }
 
   set(
     notesAtom,
