@@ -29,7 +29,7 @@ jobs:
         with:
           context: ./brezel-notes
           push: true
-          tags: user/app:latest
+          tags: crsa441/brezel-notes:latest
 
       - name: Clean up
         run: |
