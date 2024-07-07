@@ -27,7 +27,7 @@ const selectedNoteIndexAtom = atom<number | null>(null)
  * @param {NoteInfo[]} get - The get function from Jotai
  * @returns {NoteInfo | null} - The selected note or null if no note is selected
  */
-const selectedNoteAtom = atom((get) => {
+const selectedNoteAtomAsync = atom(async (get) => {
   const notes = get(notesAtom)
   const selectedNoteIndex = get(selectedNoteIndexAtom)
 
@@ -36,11 +36,23 @@ const selectedNoteAtom = atom((get) => {
   }
 
   const selectedNote = notes[selectedNoteIndex]
+  const noteContent = await window.context.readNote(selectedNote.title)
   return {
     ...selectedNote,
-    content: `Hello from Note ${selectedNoteIndex}`
+    content: noteContent
   }
 })
+
+const selectedNoteAtom = unwrap(
+  selectedNoteAtomAsync,
+  (prev) =>
+    prev ?? {
+      id: '',
+      title: '',
+      lastEditedTime: 0,
+      content: ''
+    }
+)
 
 /**
  * This atom is used to create an empty note with a unique ID.

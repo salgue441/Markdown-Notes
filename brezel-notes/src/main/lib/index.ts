@@ -1,5 +1,5 @@
 import { NoteInfo } from '@shared/models'
-import { GetNotes } from '@shared/types'
+import { GetNotes, ReadNote } from '@shared/types'
 import { ensureDir, readFile, readdir, stat, writeFile } from 'fs-extra'
 import { isEmpty } from 'lodash'
 import { homedir } from 'os'
@@ -86,4 +86,15 @@ const getNoteInfoFromFilename = async (filename: string): Promise<NoteInfo> => {
   }
 }
 
-export { getMetadataDir, getNotes, getRootDir }
+/**
+ * Read a note from the filesystem.
+ *
+ * @param {string} filename - The filename
+ * @returns {Promise<string>} - The note content
+ */
+const readNote: ReadNote = async (filename: string) => {
+  const rootDir = getRootDir()
+  return readFile(`${rootDir}/${filename}.md`, { encoding: fileEncoding })
+}
+
+export { getMetadataDir, getNotes, getRootDir, readNote }
